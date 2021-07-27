@@ -2,9 +2,10 @@ from pathlib import Path
 import os
 
 class Site():
-    def __init__(self, source, dest):
+    def __init__(self, source, dest, parsers=None):
         self.source = Path(source)
         self.dest = Path(dest)
+        self.parsers = parsers
 
     def create_dir(self, path):
         directory = self.dest / path.relative_to(self.source)
@@ -16,3 +17,7 @@ class Site():
         for path in self.source.rglob("*"):
             if path.is_dir():
                 self.create_dir(path)
+
+    def load_parser(self, extension):
+        for parser in self.parsers:
+            
